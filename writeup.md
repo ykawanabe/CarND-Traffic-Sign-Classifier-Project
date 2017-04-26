@@ -1,8 +1,6 @@
-#**Traffic Sign Recognition** 
+#**Traffic Sign Recognition**
 
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+This is Project 2 Traffic Sign Recognition of [Self-Driving car course on Udacity](https://www.udacity.com/drive).
 
 ---
 
@@ -19,83 +17,126 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
+[image1]: ./examples/visualization.png "Visualization"
+[image2]: ./examples/image_preprocessing.png "Preprocessing"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
 [image6]: ./examples/placeholder.png "Traffic Sign 3"
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image9]: ./examples/signs.png "Sign images"
+
 
 ## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
 ---
 ###Writeup / README
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://github.com/yusuke-kawanabe/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
-
-####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
 I used the pandas library to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of training set is 34799
+* The size of the validation set is 4410
+* The size of test set is 12630
+* The shape of a traffic sign image is (32, 32, 3)
+* The number of unique classes/labels in the data set is 43
 
 ####2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data are distributed. There are distribution is a little bit unbalanced by the order of 10.
 
 ![alt text][image1]
 
+They are sample images for each classes.
+
+![alt text][image9]
+
+Numbers corresponds to traffic sign names as shown below.
+
+| Index | Sign Name |
+|:-----|:-----------|
+| 0 | Speed limit (20km/h) |
+| 1 | Speed limit (30km/h) |
+| 2 | Speed limit (50km/h) |
+| 3 | Speed limit (60km/h) |
+| 4 | Speed limit (70km/h) |
+| 5 | Speed limit (80km/h) |
+| 6 | End of speed limit (80km/h) |
+| 7 | Speed limit (100km/h) |
+| 8 | Speed limit (120km/h) |
+| 9 | No passing |
+| 10 | No passing for vehicles over 3.5 metric tons |
+| 11 | Right-of-way at the next intersection |
+| 12 | Priority road |
+| 13 | Yield |
+| 14 | Stop |
+| 15 | No vehicles |
+| 16 | Vehicles over 3.5 metric tons prohibited |
+| 17 | No entry |
+| 18 | General caution |
+| 19 | Dangerous curve to the left |
+| 20 | Dangerous curve to the right |
+| 21 | Double curve |
+| 22 | Bumpy road |
+| 23 | Slippery road |
+| 24 | Road narrows on the right |
+| 25 | Road work |
+| 26 | Traffic signals |
+| 27 | Pedestrians |
+| 28 | Children crossing |
+| 29 | Bicycles crossing |
+| 30 | Beware of ice/snow |
+| 31 | Wild animals crossing |
+| 32 | End of all speed and passing limits |
+| 33 | Turn right ahead |
+| 34 | Turn left ahead |
+| 35 | Ahead only |
+| 36 | Go straight or right |
+| 37 | Go straight or left |
+| 38 | Keep right |
+| 39 | Keep left |
+| 40 | Roundabout mandatory |
+| 41 | End of no passing |
+| 42 | End of no passing by vehicles over 3.5 metric tons |
+
 ###Design and Test a Model Architecture
-
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
-
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
 
 ![alt text][image2]
 
-As a last step, I normalized the image data because ...
+The image above illustrates image preprocess techniques that I tried and applied.
 
-I decided to generate additional data because ... 
+As a first step, I decided to sharpen the picture because edges contain more information as signs are designed to stand out from the background to avoid horrible car accidents.
+Here is an example of a traffic sign image before and after sharpening.
 
-To add more data to the the data set, I used the following techniques because ... 
+Secondly, I applied histogram equalization because different training data has different contrast.
 
-Here is an example of an original image and an augmented image:
+As the last step, I normalized the image data because good data set should have mean of zero and equal variance across variables.
 
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+I decided not to use grayscale as color have important data in traffic signs.
 
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
+| Layer                 |     Description                                |
+|:---------------------:|:---------------------------------------------:|
+| Input                 | 32x32x3 RGB image                               |
+| Convolution 3x3         | 1x1 stride, same padding, outputs 32x32x64     |
+| RELU                    |                                                |
+| Max pooling              | 2x2 stride,  outputs 16x16x64                 |
+| Convolution 3x3        | etc.                                          |
+| Fully connected        | etc.                                            |
+| Softmax                | etc.                                            |
+|                        |                                                |
+|                        |                                                |
+
 
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
@@ -106,7 +147,7 @@ To train the model, I used an ....
 
 My final model results were:
 * training set accuracy of ?
-* validation set accuracy of ? 
+* validation set accuracy of ?
 * test set accuracy of ?
 
 If an iterative approach was chosen:
@@ -120,7 +161,7 @@ If a well known architecture was chosen:
 * What architecture was chosen?
 * Why did you believe it would be relevant to the traffic sign application?
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+
 
 ###Test a Model on New Images
 
@@ -128,7 +169,7 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
+![alt text][image4] ![alt text][image5] ![alt text][image6]
 ![alt text][image7] ![alt text][image8]
 
 The first image might be difficult to classify because ...
@@ -137,13 +178,13 @@ The first image might be difficult to classify because ...
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Image                    |     Prediction                                |
+|:---------------------:|:---------------------------------------------:|
+| Stop Sign              | Stop sign                                       |
+| U-turn                 | U-turn                                         |
+| Yield                    | Yield                                            |
+| 100 km/h                  | Bumpy Road                                     |
+| Slippery Road            | Slippery Road                                  |
 
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
@@ -154,18 +195,16 @@ The code for making predictions on my final model is located in the 11th cell of
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| Probability             |     Prediction                                |
+|:---------------------:|:---------------------------------------------:|
+| .60                     | Stop sign                                       |
+| .20                     | U-turn                                         |
+| .05                    | Yield                                            |
+| .04                      | Bumpy Road                                     |
+| .01                    | Slippery Road                                  |
 
 
-For the second image ... 
+For the second image ...
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 ####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
