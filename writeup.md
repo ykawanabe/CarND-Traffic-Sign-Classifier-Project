@@ -145,8 +145,6 @@ To train the model, I used an LeNet architecture. As the number of class is bigg
 
 To avoid overfitting, I decided to use dropout.
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
-
 My final model results were:
 * validation set accuracy of 0.965
 * test set accuracy of 0.938004732131958
@@ -199,3 +197,5 @@ For the second image the model is sure that this is a stop sign.
 | .00                    | Priority road |
 
 and so forth.
+
+The accuracy on the captured images is 60% while it was 93% on the testing set thus it seems the model is overfitting. This can be avoided by adding generalization term to the model, add more dropout to the model, and getting/creating more datasets. 
